@@ -150,9 +150,12 @@ Icon*
 !.elasticbeanstalk/*.global.yml
 
 # Ignore custom folders or files 
+.dockerignore
 docker 
 dataset 
+model 
 docs/images
 docs/proposal
+docs/diagram
 docs/report
-.dockerignore
+source/notebooks_personal

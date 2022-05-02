@@ -1,0 +1,176 @@
+# %%
+# Python modules. 
+import os, re, pickle 
+import pandas as pd
+import spacy 
+from spacy.tokens import DocBin 
+
+# Custom modules. 
+from source.modules.processor_spacy import to_spacy_document
+
+# Custom configuration.
+from source.config_py.config import DIR_DATASET
+
+
+
+# %%
+class ManageFiles():
+	def __init__(self, dataset_dir:str=DIR_DATASET):
+		'''General files class with common methods needed for all files.'''
+
+		self.dataset_dir = dataset_dir 
+
+
+	def write_to_csv(self, data:pd.DataFrame, filename:str=None, **kwargs):
+		'''Write dataframe to csv file.'''
+
+		print(f"Write to ({filename})") 
+
+		# Check directories. 
+		self._get_ready_for_file_operation()
+
+		# Write files. 
+		filepath = os.path.join(self.dataset_dir, filename) 
+		data.to_csv(filepath, **kwargs) 
+
+
+	def read_from_csv(self, filename:str=None, **kwargs):
+		'''Read csv file into dataframe.'''
+
+		print(f"Read from ({filename})") 
+
+		# Check directories. 
+		self._get_ready_for_file_operation()
+
+		# Read files. 
+		filepath = os.path.join(self.dataset_dir, filename) 
+		df = pd.read_csv(filepath, **kwargs) 
+		return df
+
+
+	def write_to_parquet(self, data:pd.DataFrame, filename:str=None, **kwargs):
+		'''Write dataframe to parquet file.'''
+
+		print(f"Write to ({filename})") 
+
+		# Check directories. 
+		self._get_ready_for_file_operation()
+
+		# Write files. 
+		filepath = os.path.join(self.dataset_dir, filename) 
+		data.to_parquet(filepath, **kwargs) 
+
+
+	def read_from_parquet(self, filename:str=None, **kwargs):
+		'''Read parquet file into dataframe.'''
+
+		print(f"Read from ({filename})") 
+
+		# Check directories. 
+		self._get_ready_for_file_operation()
+
+		# Read files. 
+		filepath = os.path.join(self.dataset_dir, filename) 
+		df = pd.read_parquet(filepath, **kwargs) 
+		return df
+
+
+	def save_cache_pk(self, dir:str=None, filename:str=None, object=None): 
+		'''Cache the result.''' 
+
+		print(f"Save to ({filename})") 
+
+		# Check directories. 
+		self._get_ready_for_file_operation()
+
+		path = os.path.join(dir, filename) 
+		with open(path, "wb") as f: 
+			pickle.dump(object, f) 
+
+
+	def load_cache_pk(self, dir:str=None, filename:str=None): 
+		'''Load the cache.''' 
+
+		print(f"Load from ({filename})") 
+
+		# Check directories. 
+		self._get_ready_for_file_operation()
+
+		path = os.path.join(dir, filename) 
+		with open(path, "rb") as f: 
+			return pickle.load(f) 
+
+
+	def save_to_spacy(self, data:spacy.tokens.doc.Doc, filename:str, nlp:spacy.tokens.doc.Doc): 
+		'''Save dataset in SpaCy format.'''
+		
+		print(f"Save to ({filename})") 
+
+		path = os.path.join(self.dataset_dir, filename) 
+		doc_bin = DocBin(docs=to_spacy_document(nlp, data)) 
+		doc_bin.to_disk(path) 
+
+
+	def _update_version(self, dir:str=None, version:int=None, dev_status:bool=True): 
+		'''For versioning.''' 
+
+		# Check directories. 
+		self._get_ready_for_file_operation() 
+		
+		dev_status = "dev" if dev_status else "prod" 
+		path = os.path.join(dir, dev_status, "VERSION") 
+		with open(path, "w") as f: 
+			version += 1 
+			print(f"Updated version: ({version}) in ({dev_status})") 
+			f.write(str(version)) 
+
+
+	def resume_version(self, dir:str=None, dev_status:bool=True): 
+		'''Resume the latest version.''' 
+
+		# Ensure the directories and version file exists. 
+		self._confirm_version_exist(dir, dev_status) 
+
+		dev_status = "dev" if dev_status else "prod" 
+		path = os.path.join(dir, dev_status, "VERSION") 
+		with open(path, "r") as f: 
+			dev_status, version = dev_status, int(f.read()) 
+			print(f"Resumed version: ({version}) from ({dev_status})") 
+			return dev_status, version 
+
+
+	def _get_ready_for_file_operation(self):
+		'''Handles the necessary checks prior to any file operation.'''
+
+		self._confirm_current_working_directory()
+		self._confirm_dataset_directory() 
+
+
+	def _confirm_current_working_directory(self):
+		'''Set working directory to project directory.'''
+
+		if not re.match(r".+/MADS-M2-estimating-news-impact-on-financial-market$", os.getcwd()): 
+			os.chdir("../..") 
+
+
+	def _confirm_dataset_directory(self):
+		'''Checks for existince of dataset directory and creates if needed.'''
+
+		if not os.path.exists(self.dataset_dir):
+			os.makedirs(self.dataset_dir) 
+
+
+	def _confirm_version_exist(self, dir:str, dev_status:bool=True): 
+		'''Checks for existince of directories and version and initiate them if needed.''' 
+
+		dev_status = "dev" if dev_status else "prod" 
+		path = os.path.join(dir, dev_status) 
+
+		# Create the directory. 
+		if not os.path.exists(path): 
+			os.makedirs(path) 
+
+			# Create the version file. 
+			with open(os.path.join((path, "VERSION")), "x") as f: 
+				version = 1 
+				f.write(str(version)) 
