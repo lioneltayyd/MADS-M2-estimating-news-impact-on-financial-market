@@ -93,6 +93,10 @@ Notebook Name | Description
     - [CNN News Articles Ver2](https://www.kaggle.com/datasets/hadasu92/cnn-articles-after-basic-cleaning)
     - [Sentiment Dataset For Financial News](https://www.kaggle.com/datasets/ankurzing/sentiment-analysis-for-financial-news)
 
+3.  Rename the datasets to the following to ensure consistency when reading the datasets: 
+    - CNN News Articles Ver2 --> cnn_articles_v2.csv 
+    - Sentiment Dataset For Financial News --> sentiment_news.csv 
+
 ---
 
 ## __Processing Workflow & Workload Distribution Diagram__
