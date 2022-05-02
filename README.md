@@ -1,10 +1,10 @@
 # __MADS M2 Estimating News Impact On The Financial Market__ 
 
-## __Project Purpose__
+## __Project Purpose__ 
 
 Employees working in the financial sector are facing an immense amount of information everyday compared to other sectors. The industry grapples with an overwhelming amount of unstructured data, such as media, articles, research reports, and company filings. Efficiency has become a need in today’s society as employers in the financial sector are fighting to get first hand information and stay up-to-date with the current state of the world. Hence, we seek to close this gap by enhancing the reading experience for financial domain experts. Although this is our ultimate objective, we will only focus on smaller parts of the scope for this project such as the following. 
 
-__Project goals:__
+__Project goals:__ 
 
 1. __Discover latent topic / theme:__ Discover latent topics to obtain the overall theme for each article. The model will be used to categorize the article and output a feature (the topic or theme) for the regression or classification task (either one) to estimate the market movement or volatility given the occurrence of that theme. For topic modeling, we have either direction to choose from (technical detail will explained later): 
 Filter the articles by specific entities, say, commodities or other categories. Then discover the topics within that category. 

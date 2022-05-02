@@ -144,18 +144,22 @@ dmypy.json
 # Icon file. 
 Icon*
 
-# Elastic Beanstalk files
+# Elastic Beanstalk files. 
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
 
-# Ignore custom folders or files 
-.dockerignore
+# Ignore custom folders or files. 
+.dvc/config 
+.dockerignore 
 docker 
-dataset 
 model 
 docs/images
 docs/proposal
 docs/diagram
 docs/report
 source/notebooks_personal
+dataset/backup 
+dataset/ner_collection 
+dataset/news_collection 
+dataset/wrds_ravenpack

@@ -1,0 +1,4 @@
+outs:
+- md5: 4eea33e9c2034293b57aea3a684ba01e
+  size: 528187
+  path: sentiment_testset.spacy

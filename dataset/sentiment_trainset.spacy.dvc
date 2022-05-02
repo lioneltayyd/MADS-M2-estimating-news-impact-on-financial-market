@@ -1,0 +1,4 @@
+outs:
+- md5: eb4a0435e759c844d42f6b7d257043ee
+  size: 1046382
+  path: sentiment_trainset.spacy
