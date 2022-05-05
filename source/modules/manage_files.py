@@ -111,7 +111,7 @@ class ManageFiles():
 		doc_bin.to_disk(path) 
 
 
-	def _update_version(self, dir:str=None, version:int=None, dev_status:bool=True): 
+	def update_version(self, dir:str=None, version:int=None, dev_status:bool=True): 
 		'''For versioning.''' 
 
 		# Check directories. 

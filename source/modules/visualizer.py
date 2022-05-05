@@ -184,3 +184,33 @@ def plot_correlation(data, x:str, y:str, xlim:tuple=(-4,4), ylim:tuple=(-4,4), f
 
     chart += chart.transform_regression(x, y).mark_line(color="red") 
     return chart.interactive() 
+
+
+
+# %% 
+def plot_discre_dist(data, x:str, format_text:str=".2f"): 
+	height, width = 50, 300 
+	chart_title = x.replace("_", " ") 
+
+	# Base encoding. 
+	chart = alt.Chart(data[x].value_counts(normalize=True).reset_index(drop=False)) \
+		.mark_bar(size=50) \
+		.encode(
+			x=alt.X(
+				f"sum({x}):Q", 
+				axis=alt.Axis(title="", titleFontSize=14, labelFontSize=10, labelAngle=0), 
+				scale=alt.Scale(domain=[0,1]), 
+			),
+			color=alt.Color(
+				f"index:N", 
+				scale=alt.Scale(scheme="blues", reverse=False),
+                legend=alt.Legend(title="Label categories", direction="vertical"), 
+			), 
+			tooltip=[
+				alt.Tooltip(f"{x}:Q", title=x, format=format_text), 
+				alt.Tooltip(f"index:N", title="categories"), 
+			], 
+		) \
+		.properties(title=chart_title, height=height, width=width) 
+
+	return chart 

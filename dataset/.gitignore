@@ -1,5 +1,6 @@
 /cnn_articles_v2.csv
 /sentiment_news.csv
 /cnn_news_business.parquet
-/sentiment_testset.spacy
 /sentiment_trainset.spacy
+/sentiment_validset.spacy
+/sentiment_testset.spacy
