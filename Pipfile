@@ -5,7 +5,7 @@ verify_ssl = true
 
 [packages]
 ipykernel = "*"
-dvc = "*"
+dvc = {extras = ["gdrive"], version = "*"}
 pyarrow = "*"
 regex = "*"
 numpy = "*"
