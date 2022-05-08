@@ -1,0 +1,4 @@
+outs:
+- md5: 97f0abec0ce8739f37a3899a8ed96407
+  size: 4619354
+  path: cnn_corpus.cor

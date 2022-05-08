@@ -1,6 +1,6 @@
 # %%
 # Python modules. 
-import os, time, urllib, json 
+import os, time, urllib, json, re 
 import spacy 
 import numpy as np 
 import pandas as pd
@@ -199,3 +199,69 @@ def get_center_component(headline_id:np.array, latent_feature:np.array) -> pd.Da
         .loc[:,"topic":].groupby("topic").mean() 
 
     return df_center_component 
+
+
+
+# %% 
+def get_token_variation(row:pd.Series) -> list: 
+	'''Get every possible unique variation of strings from each extracted entity title.''' 
+
+	token_variation = [] 
+	ent_title = row["entities"]["title"] 
+	ent_chars = row["entities"]["characters"] 
+	body_text = row["article_text"] 
+
+    # Assign nothing if no entities title is found for specific articles. 
+    # This can happen because Wifikier API error such as: 
+    #   >> Input text is too long (30180 characters, max allowed = 25000). 
+    #   >> Response does not contain (wikiDataClasses). 
+	if isinstance(ent_title, type(None)): 
+		return None 
+
+	for i, _ in enumerate(ent_title): 
+		# To store unique strings to be replaced. 
+		span_token = set() 
+
+		# Get every possible unique variation of strings for replacement later. 
+		for span in ent_chars[i]: 
+			# Extract the text. 
+			span_beg, span_end = tuple(span) 
+			text = body_text[span_beg:span_end+1] 
+
+			# Replace non-word and non-whitespace string. 
+			text = re.sub(r"[^\w\s]*", "", text).strip() 
+			
+			# In case of empty string, ignore it. 
+			if text: 
+				span_token.add(text) 
+	
+		# To track each unique set of strings for each entity title. 
+		token_variation.append(span_token) 
+	return token_variation 
+
+
+
+# %% 
+def replace_references(row:pd.Series) -> str: 
+	'''Replace specific text with entities title.''' 
+	
+	ent_title = row["entities"]["title"] 
+	token_variation = row["token_variation"] 
+	body_text = row["article_text"] 
+
+    # Assign nothing if no text (ones to be replaced) is found for specific articles. 
+    # This can happen because Wifikier API error such as: 
+    #   >> Input text is too long (30180 characters, max allowed = 25000). 
+    #   >> Response does not contain (wikiDataClasses). 
+	if isinstance(token_variation, type(None)): 
+		return None 
+
+	for i, span_token in enumerate(token_variation): 
+		# Replace strings with the given entity title. 
+		for to_be_replaced in span_token: 
+			title_phrase = ent_title[i].strip().replace(" ", "_") 
+			body_text = re.sub(f"\\b{to_be_replaced}\\b", title_phrase, body_text) 
+
+			print(to_be_replaced, " >> ", title_phrase) 
+		print("-----" * 5) 
+	return body_text 

@@ -1,0 +1,4 @@
+outs:
+- md5: 961e3ba5b74c545821906c7ada9808b1
+  size: 8315559
+  path: cnn_news_business_ref.parquet

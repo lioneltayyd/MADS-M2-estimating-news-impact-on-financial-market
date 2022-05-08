@@ -4,3 +4,5 @@
 /sentiment_trainset.spacy
 /sentiment_validset.spacy
 /sentiment_testset.spacy
+/cnn_news_business_ref.parquet
+/cnn_corpus.cor
