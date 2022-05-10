@@ -101,6 +101,46 @@ class ManageFiles():
 			return pickle.load(f) 
 
 
+	def save_version_pk(self, dir:str=None, obj_name:str=None, object=None): 
+		'''Save the object and assign the version.''' 
+
+		print(f"Save model ({obj_name}).") 
+
+		# Check directories. 
+		self._get_ready_for_file_operation() 
+
+		# Load the current version and get the dev folder. 
+		dev_status, version = self.resume_version(dir, dev_status=True) 
+		obj_name = f"{obj_name}_v{version}.pickle" 
+
+		# Save the model. 
+		path = os.path.join(dir, dev_status, obj_name) 
+		with open(path, "wb") as f: 
+			pickle.dump(object, f) 
+
+		# Increment the version by 1 after saving it. 
+		self.update_version(dir, version, dev_status=True) 
+
+
+	def load_version_pk(self, dir:str=None, obj_name:str=None, version_load:str="latest"): 
+		'''Load the object with specific version.''' 
+
+		print(f"Load model ({obj_name}).") 
+
+		# Check directories. 
+		self._get_ready_for_file_operation() 
+
+		# Load the model specific version and get the dev folder. 
+		dev_status, version = self.resume_version(dir, dev_status=True) 
+		version_load = str(version) if version_load == "latest" else version_load 
+		obj_name = f"{obj_name}_v{int(version) - 1}.pickle" 
+
+		# Load the model. 
+		path = os.path.join(dir, dev_status, obj_name) 
+		with open(path, "rb") as f: 
+			return pickle.load(f) 
+
+
 	def save_to_spacy(self, data:spacy.tokens.doc.Doc, filename:str, nlp:spacy.tokens.doc.Doc): 
 		'''Save dataset in SpaCy format.'''
 		
