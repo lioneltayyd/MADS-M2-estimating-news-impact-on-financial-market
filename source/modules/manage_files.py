@@ -101,16 +101,16 @@ class ManageFiles():
 			return pickle.load(f) 
 
 
-	def save_version_pk(self, dir:str=None, obj_name:str=None, object=None): 
+	def save_version_pk(self, dir:str=None, obj_name:str=None, object=None, dev_status:bool=True): 
 		'''Save the object and assign the version.''' 
 
-		print(f"Save model ({obj_name}).") 
+		print(f"Save object ({obj_name}).") 
 
 		# Check directories. 
 		self._get_ready_for_file_operation() 
 
 		# Load the current version and get the dev folder. 
-		dev_status, version = self.resume_version(dir, dev_status=True) 
+		dev_status, version = self.resume_version(dir, dev_status=dev_status) 
 		obj_name = f"{obj_name}_v{version}.pickle" 
 
 		# Save the model. 
@@ -122,16 +122,16 @@ class ManageFiles():
 		self.update_version(dir, version, dev_status=True) 
 
 
-	def load_version_pk(self, dir:str=None, obj_name:str=None, version_load:str="latest"): 
+	def load_version_pk(self, dir:str=None, obj_name:str=None, version_load:str="latest", dev_status:bool=True): 
 		'''Load the object with specific version.''' 
 
-		print(f"Load model ({obj_name}).") 
+		print(f"Load object ({obj_name}).") 
 
 		# Check directories. 
 		self._get_ready_for_file_operation() 
 
 		# Load the model specific version and get the dev folder. 
-		dev_status, version = self.resume_version(dir, dev_status=True) 
+		dev_status, version = self.resume_version(dir, dev_status=dev_status) 
 		version_load = str(version) if version_load == "latest" else version_load 
 		obj_name = f"{obj_name}_v{int(version) - 1}.pickle" 
 
