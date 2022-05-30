@@ -158,6 +158,7 @@ docs/images
 docs/proposal
 docs/diagram
 docs/report
+docs/visualisation 
 source/notebooks_personal
 dataset/backup 
 dataset/ner_collection 

@@ -157,7 +157,7 @@ def plot_umap(mapper, headline_id:np.array, latent_feature:np.array):
 
 
 # %%
-def plot_correlation(data, x:str, y:str, xlim:tuple=(-4,4), ylim:tuple=(-4,4), format_text:str=".2f"): 
+def plot_correlation(data, x:str, y:str, xlim:tuple=(0,4), ylim:tuple=(0,4), format_text:str=".2f"): 
     height, width = 300, 400
     chart_title = "Correlation Between (True) & (Pred)" 
 
@@ -214,3 +214,46 @@ def plot_discre_dist(data, x:str, format_text:str=".2f"):
 		.properties(title=chart_title, height=height, width=width) 
 
 	return chart 
+
+
+
+# %% 
+def plot_multiverse_analysis(data, x:str, y:str, err_minmax:tuple, xlim:list=[0,1.2], format_text:str=".3f"): 
+	height, width = 400, 800 
+	chart_title = "Multiverse Analysis Result (95% confidence interval)" 
+	sort_experiment = data[y].to_list() 
+
+	# Base encoding. 
+	base = alt.Chart(data) \
+		.encode(
+			x=alt.X(
+				f"{x}:Q", 
+				axis=alt.Axis(title=x, titleFontSize=14, labelFontSize=10, labelAngle=0), 
+				scale=alt.Scale(domain=xlim), 
+			),
+			y=alt.Y(
+				f"{y}:N", 
+				axis=alt.Axis(title=y, titleFontSize=14, labelFontSize=10, labelAngle=0), 
+				sort=sort_experiment, 
+			),
+		) \
+		.properties(title=chart_title, height=height, width=width) 
+
+	chart = base \
+		.mark_point(size=100, filled=True, color="black") \
+		.encode(
+			tooltip=[
+				alt.Tooltip(f"{x}:Q", title=x, format=format_text), 
+				alt.Tooltip(f"{y}:N", title="component"), 
+			], 
+		)
+
+	errorbars = base \
+		.mark_errorbar() \
+		.encode(
+			x=alt.X(f"{err_minmax[0]}:Q", title=""), 
+			y=alt.Y(f"{y}:N", sort=sort_experiment), 
+			x2=alt.X2(f"{err_minmax[1]}:Q", title=""), 
+		) 
+
+	return (chart + errorbars).interactive() 

@@ -6,3 +6,5 @@
 /sentiment_testset.spacy
 /cnn_news_business_ref.parquet
 /cnn_corpus.cor
+/yfinance_spy.csv
+/regression_performance.pickle

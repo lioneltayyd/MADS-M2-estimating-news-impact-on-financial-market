@@ -1,0 +1,4 @@
+outs:
+- md5: 69aa4058e25c2f03ab651e07b9bf6622
+  size: 194677
+  path: yfinance_spy.csv

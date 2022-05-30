@@ -2,15 +2,15 @@
 
 ## __Project Purpose__ 
 
-Employees working in the financial sector are facing an immense amount of information everyday compared to other sectors. The industry grapples with an overwhelming amount of unstructured data, such as media, articles, research reports, and company filings. Efficiency has become a need in today’s society as employers in the financial sector are fighting to get first hand information and stay up-to-date with the current state of the world. Hence, we seek to close this gap by enhancing the reading experience for financial domain experts. Although this is our ultimate objective, we will only focus on smaller parts of the scope for this project such as the following. 
+Employees working in the financial sector are facing an immense amount of information everyday compared to other sectors. The industry grapples with an overwhelming amount of unstructured data, such as media articles, research reports, and company filings. Efficiency has become a need in today’s society as employers in the financial sector are fighting to get first-hand information and stay up-to-date with the current state of the world. Hence, we seek to close this gap by examining the extent to which financial news articles affect the volatility of the SPDR S&P 500 ETF (SPY). This is one of the largest ETF and a proxy for the 500 listed big-cap companies in the United States. This can be extended to include other media, regions, and markets, so as to determine the overall extent of media influence on the broader markets. Although this is our ultimate objective, we will only focus on smaller parts of the scope for this project such as the following: 
 
-__Project goals:__ 
+__Project goals / Motivation **:__
 
-1. __Discover latent topic / theme:__ Discover latent topics to obtain the overall theme for each article. The model will be used to categorize the article and output a feature (the topic or theme) for the regression or classification task (either one) to estimate the market movement or volatility given the occurrence of that theme. For topic modeling, we have either direction to choose from (technical detail will explained later): 
-Filter the articles by specific entities, say, commodities or other categories. Then discover the topics within that category. 
-Discover the topics for the entire business and finance articles. We may have a larger set of topics for this. 
-1. __Predict news sentiment:__ Discover sentiment for headlines and the influence of specific tokens on the sentiment when interpreting the model. The outcome will be used as a feature to estimate the market movement or volatility. 
-1. __Estimate the feature influence on market movement:__ We will use extracted entities, themes, sentiment, or other features we discover along the way to estimate their influence on market movement when interpreting the model. The weight of the entities, themes, and sentiment will be used to inform readers the impact of the article on the overall financial market. We are aware of the complexity behind the financial market research, so this is just a tiny scope for exploration. 
+1.  Extract latent topic / theme: Extract latent topics to obtain the overall theme for each article. The topic model will be used to categorize news articles and output a feature (the topic or theme) for downstream regression tasks to estimate the SPY movement or volatility given the occurrence of that theme. 
+1.  Extract news sentiment: Extract headline sentiment and the influence of specific tokens on the sentiment when interpreting the model. The outcome will be used as a feature to estimate the movement of SPY ETF or volatility. 
+1.  Estimate the feature influence on SPY movement: We will use extracted themes / topics, sentiment, and other features to estimate their influence on SPY movement when interpreting the model. We are aware of the complexity behind the financial market research and consider this a smaller-scale project and a means to explore various tools related to NLP. We already expect a weak performance for the model. 
+
+** Despite the goals mentioned above, our underlying intention is to explore various tools, concepts, good practices, and approaches related to ML and NLP we have learnt so far throughout the MADS program. We do not expect any spectacular insights from this project since this is about the financial market. However, we can leverage this framework to further extend our analysis scope and depth.
 
 --- 
 
@@ -31,8 +31,10 @@ pipfile | For setting up the `pipenv` and tracking all the installed dependencie
 
 Notebook Name | Description
 --- | ---
-... | ...
-... | ...
+build_topic_modelling | Framework and steps for building and analysing the topic model. 
+build_spacy_sentiment | Framework and steps for building and analysing the sentiment model. 
+build_mktmv_regression | Framework and steps for building and analysing the regression model. 
+explore_embeddings | Framework and steps for building and analysing the embeddings. 
 
 --- 
 
@@ -79,8 +81,8 @@ Notebook Name | Description
     the notebook directly on your VSCode or IDE without installing `jupyter notebook`. 
 
 1.  For VSCode users, press CMD + SHIFT + P and type `Reload Window` to reload the window after installing
-    the python packages. Then repeat the previous step and type `Select Interpreter` to 
-    select the python interpreter `MADS-M1-analysis-of-price-sensitivity-to-various-factors` 
+    the python packages. Then press press CMD + SHIFT + P again and type `Select Interpreter` to 
+    select the python interpreter `MADS-M2-estimating-news-impact-on-financial-market` 
     to run the notebook. 
 
 --- 
@@ -88,21 +90,12 @@ Notebook Name | Description
 ## __Required Data Source Downloads__
 
 1.  A new directory called `dataset` should be created within the main project directory.
-2.  The following csv files should be downloaded from Kaggle and put in the `dataset` directory:
-
-    - [CNN News Articles Ver2](https://www.kaggle.com/datasets/hadasu92/cnn-articles-after-basic-cleaning)
-    - [Sentiment Dataset For Financial News](https://www.kaggle.com/datasets/ankurzing/sentiment-analysis-for-financial-news)
-
-3.  Rename the datasets to the following to ensure consistency when reading the datasets: 
-    - CNN News Articles Ver2 --> cnn_articles_v2.csv 
-    - Sentiment Dataset For Financial News --> sentiment_news.csv 
+2.  Download the datasets from [Google Drive](https://drive.google.com/drive/folders/1Scnd3fYHG_zd1wk6petvF-9U_QWosrLm?usp=sharing) and put them in the `dataset` directory. 
 
 ---
 
 ## __Processing Workflow & Workload Distribution Diagram__
 
-You can access `processing_flowchart.html` inside the `docs/flowchart` folder to view the diagrams. 
+This is our workflow guide. You can access `processing_flowchart.drawio` inside the `docs/flowchart` folder to view the diagrams. 
 
-![processing_flowchart](docs/flowchart/processing_flowchart-workflow_v2.png) 
-
-![workload_distribution](docs/flowchart/processing_flowchart-high-level-workload.png) 
+![processing_flowchart](docs/flowchart/processing_flowchart_workflow.png) 
