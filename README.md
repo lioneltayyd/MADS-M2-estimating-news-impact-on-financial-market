@@ -2,6 +2,8 @@
 
 ## __Project Purpose__ 
 
+[Link to the report can be found here](https://docs.google.com/document/d/1wTRE1zm75n_OGIUkifLPLZNjDqnY-ttF/edit?usp=sharing&ouid=116093492831692731415&rtpof=true&sd=true). 
+
 Employees working in the financial sector are facing an immense amount of information everyday compared to other sectors. The industry grapples with an overwhelming amount of unstructured data, such as media articles, research reports, and company filings. Efficiency has become a need in today’s society as employers in the financial sector are fighting to get first-hand information and stay up-to-date with the current state of the world. Hence, we seek to close this gap by examining the extent to which financial news articles affect the volatility of the SPDR S&P 500 ETF (SPY). This is one of the largest ETF and a proxy for the 500 listed big-cap companies in the United States. This can be extended to include other media, regions, and markets, so as to determine the overall extent of media influence on the broader markets. Although this is our ultimate objective, we will only focus on smaller parts of the scope for this project such as the following: 
 
 __Project goals / Motivation **:__
